@@ -31,9 +31,9 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using device:", device)
 
 adapter_repo = "Darialjx2001/qlora-mistral7b-dolly15k"
-base_model = "mistralai/Mistral-7B-Instruct-v0.2"
+original_model = "mistralai/Mistral-7B-Instruct-v0.2"
 
-tokenizer = AutoTokenizer.from_pretrained(base_model)
+tokenizer = AutoTokenizer.from_pretrained(original_model)
 tokenizer.pad_token = tokenizer.eos_token
 
 bnb_config = BitsAndBytesConfig(
@@ -44,7 +44,7 @@ bnb_config = BitsAndBytesConfig(
 )
 
 model = AutoModelForCausalLM.from_pretrained(
-    base_model,
+    original_model,
     quantization_config=bnb_config,
     device_map="auto",
 )
